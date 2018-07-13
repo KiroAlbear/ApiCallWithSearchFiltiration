@@ -43,6 +43,4 @@ class SearchUsers(context: Context, recycleview: RecyclerView, adaper: UsersAdap
     }
 
 
-
-
 }

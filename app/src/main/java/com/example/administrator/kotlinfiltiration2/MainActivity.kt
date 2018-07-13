@@ -7,10 +7,12 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.AbsListView
 import android.widget.LinearLayout
 import com.example.administrator.kotlinfiltiration2.Model.User
 import com.example.administrator.kotlinfiltiration2.Model.UsersList
 import com.example.administrator.kotlinfiltiration2.ViewModel.SearchUsers
+import com.example.administrator.kotlinfiltiration2.ViewModel.SwipAction
 import com.example.administrator.kotlinfiltiration2.ViewModel.UsersAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,16 +33,16 @@ class MainActivity : AppCompatActivity() {
           userlist =uList.AddingUsers()
 
 
-        usersadapter = UsersAdapter(userlist,uList.ColorList())
+        usersadapter = UsersAdapter(userlist)
         var search  = SearchUsers(this,myRecycleView,usersadapter,userlist)
 
-        //usersadapter = UsersAdapter(userlist)
-        val recycleview = findViewById<RecyclerView>(R.id.myRecycleView)
+//        //usersadapter = UsersAdapter(userlist)
+//        val recycleview = findViewById<RecyclerView>(R.id.myRecycleView)
 
         //search=SearchUsers(this,recyclerView,usersadapter)
-        recycleview.layoutManager =  LinearLayoutManager(this@MainActivity)
+        myRecycleView.layoutManager =  LinearLayoutManager(this@MainActivity)
         myRecycleView.adapter = usersadapter
-      //  activityMainBinding.search = SearchUsers(this,myRecycleView,usersadapter,userlist)
+        // activityMainBinding.search = SearchUsers(this,myRecycleView,usersadapter,userlist)
 
            myeditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -57,6 +59,9 @@ class MainActivity : AppCompatActivity() {
                 search.Search(p0.toString())
             }
         })
+
+        var swipaction = SwipAction(myRecycleView,usersadapter)
+        swipaction.SetSwipAction()
 
 
 
