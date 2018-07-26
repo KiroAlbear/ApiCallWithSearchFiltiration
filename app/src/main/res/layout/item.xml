@@ -9,7 +9,7 @@
     <data>
         <variable
             name="itemstring"
-            type="com.example.administrator.kotlinfiltiration2.ViewModel.UsersAdapter.Holder"/>
+            type="com.example.administrator.kotlinfiltiration2.ViewModel.CurrancyAdapter.Holder"/>
     </data>
 
 

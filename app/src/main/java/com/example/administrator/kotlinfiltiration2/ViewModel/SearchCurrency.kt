@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.administrator.kotlinfiltiration2.Model.Currency
 
-class SearchUsers(context: Context, recycleview: RecyclerView, adaper: UsersAdapter ) : ViewModel() {
+class SearchCurrency(context: Context, recycleview: RecyclerView, adaper: CurrancyAdapter ) : ViewModel() {
 
     private var arraylis: List<Currency.Datum> =adaper.GetCurrencyList()
-    private var adapter: UsersAdapter = adaper
+    private var adapter: CurrancyAdapter = adaper
     private var recycleview:RecyclerView = recycleview
 
     public fun Search(word: String) {

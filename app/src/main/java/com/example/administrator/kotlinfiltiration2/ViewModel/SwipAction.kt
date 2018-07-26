@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import javax.security.auth.callback.Callback
 
-class SwipAction(recyclerview: RecyclerView, adapter: UsersAdapter) {
+class SwipAction(recyclerview: RecyclerView, adapter: CurrancyAdapter) {
     var adapter = adapter
     val recyclerview = recyclerview
     fun SetSwipAction() {

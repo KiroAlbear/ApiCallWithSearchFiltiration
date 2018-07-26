@@ -8,8 +8,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.example.administrator.kotlinfiltiration2.Model.Currency
-import com.example.administrator.kotlinfiltiration2.Model.User
-import com.example.administrator.kotlinfiltiration2.Model.UsersList
 import com.example.administrator.kotlinfiltiration2.ViewModel.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -33,8 +31,8 @@ class MainActivity : AppCompatActivity() {
     // private var userlist: ArrayList<User> = arrayListOf()
    // private var uList: UsersList = UsersList()
 
-    lateinit var CurrencyAdapter: UsersAdapter
-    private lateinit var search:SearchUsers
+    lateinit var currencyAdapter: CurrancyAdapter
+    private lateinit var search:SearchCurrency
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +73,11 @@ class MainActivity : AppCompatActivity() {
                 var currencyresponse: List<Currency.Datum> = response!!.body()!!.data!!
 
                // var currencies = currencyresponse!!.data.
-                CurrencyAdapter = UsersAdapter(currencyresponse)
+                currencyAdapter = CurrancyAdapter(currencyresponse)
                 myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
-                myRecycleView.adapter = CurrencyAdapter
+                myRecycleView.adapter = currencyAdapter
 
-                search=SearchUsers(applicationContext,myRecycleView,CurrencyAdapter)
+                search=SearchCurrency(applicationContext,myRecycleView,currencyAdapter)
 
                 Toast.makeText(applicationContext, currencyresponse!![2].name,Toast.LENGTH_SHORT).show()
 

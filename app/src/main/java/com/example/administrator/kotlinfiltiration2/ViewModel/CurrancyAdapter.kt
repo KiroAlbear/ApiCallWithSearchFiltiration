@@ -11,7 +11,7 @@ import com.example.administrator.kotlinfiltiration2.R.layout.item
 
 
 
-class UsersAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter<UsersAdapter.Holder>() {
+class CurrancyAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter<CurrancyAdapter.Holder>() {
     //  var usersList: ArrayList<User> = userlist
     private var colorlist: ArrayList<Int> = arrayListOf()
     var col = 0
