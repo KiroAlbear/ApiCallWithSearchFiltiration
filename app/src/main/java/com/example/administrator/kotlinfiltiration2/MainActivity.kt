@@ -29,16 +29,19 @@ class MainActivity : AppCompatActivity() {
 
 
     // private var userlist: ArrayList<User> = arrayListOf()
-   // private var uList: UsersList = UsersList()
+    // private var uList: UsersList = UsersList()
 
     lateinit var currencyAdapter: CurrancyAdapter
-    private lateinit var search:SearchCurrency
+    private lateinit var search: SearchCurrency
+    private var currencydatabase: SaveToDataBase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
+
+       
 
         val retrofit: Retrofit = Retrofit.Builder().baseUrl("https://api.coinmarketcap.com")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -59,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 //                })
 
 
-
         var call: Call<Currency> = request.getcurrency()
 
         call.enqueue(object : Callback<Currency> {
@@ -72,14 +74,17 @@ class MainActivity : AppCompatActivity() {
 
                 var currencyresponse: List<Currency.Datum> = response!!.body()!!.data!!
 
-               // var currencies = currencyresponse!!.data.
+                // var currencies = currencyresponse!!.data.
                 currencyAdapter = CurrancyAdapter(currencyresponse)
                 myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
                 myRecycleView.adapter = currencyAdapter
 
-                search=SearchCurrency(applicationContext,myRecycleView,currencyAdapter)
+                search = SearchCurrency(applicationContext, myRecycleView, currencyAdapter)
 
-                Toast.makeText(applicationContext, currencyresponse!![2].name,Toast.LENGTH_SHORT).show()
+                currencydatabase = SaveToDataBase(applicationContext, currencyresponse)
+                currencydatabase!!.savetodataase()
+
+                //  Toast.makeText(applicationContext, currencyresponse!![2].name,Toast.LENGTH_SHORT).show()
 
 
             }
@@ -99,8 +104,6 @@ class MainActivity : AppCompatActivity() {
 //        })
 
 
-
-
         //    var search  = SearchUsers(this,myRecycleView,CurrencyAdapter)
 
 
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         // activityMainBinding.search = SearchUsers(this,myRecycleView,usersadapter,userlist)
 
-            myeditText.addTextChangedListener(object : TextWatcher {
+        myeditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
             }
@@ -122,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-                 search.Search(p0.toString())
+                search.Search(p0.toString())
             }
         })
 

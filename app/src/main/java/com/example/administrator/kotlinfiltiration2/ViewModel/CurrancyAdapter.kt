@@ -1,10 +1,12 @@
 package com.example.administrator.kotlinfiltiration2.ViewModel
 
+import android.arch.persistence.room.Room
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.administrator.kotlinfiltiration2.Model.Currency
+import com.example.administrator.kotlinfiltiration2.Model.currencyDataBase
 import com.example.administrator.kotlinfiltiration2.R
 import com.example.administrator.kotlinfiltiration2.databinding.ItemBinding
 import com.example.administrator.kotlinfiltiration2.R.layout.item
@@ -17,6 +19,9 @@ class CurrancyAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter
     var col = 0
     var greencolor = 0
     var currency: List<Currency.Datum> = currencylist
+
+
+
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
