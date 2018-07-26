@@ -1,79 +1,98 @@
 package com.example.administrator.kotlinfiltiration2.ViewModel
 
 import android.graphics.Color
-import android.graphics.ColorSpace
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
-import com.example.administrator.kotlinfiltiration2.Model.User
+import com.example.administrator.kotlinfiltiration2.Model.Currency
 import com.example.administrator.kotlinfiltiration2.R
-import javax.security.auth.callback.Callback
+import com.example.administrator.kotlinfiltiration2.databinding.ItemBinding
+import com.example.administrator.kotlinfiltiration2.R.layout.item
 
-class UsersAdapter(userlist:ArrayList<User>) : RecyclerView.Adapter<UsersAdapter.Holder>()  {
-    var usersList: ArrayList<User> = userlist
-    var colorlist:ArrayList<Int> = arrayListOf()
-    var col =0
-    var greencolor=0
 
+
+class UsersAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter<UsersAdapter.Holder>() {
+    //  var usersList: ArrayList<User> = userlist
+    private var colorlist: ArrayList<Int> = arrayListOf()
+    var col = 0
+    var greencolor = 0
+    var currency: List<Currency.Datum> = currencylist
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): Holder {
-        val v = LayoutInflater.from(p0.context).inflate(R.layout.item,p0,false)
-        return Holder(v)
+
+    //    val view = LayoutInflater.from(p0.getContext()).inflate(R.layout.item, p0, false)
+        val inflater = LayoutInflater.from(p0.context)
+        val binding = ItemBinding.inflate(inflater)
+
+        return Holder(binding)
     }
 
     override fun getItemCount(): Int {
-        return usersList.size
-
+        return currency.size
     }
 
     override fun onBindViewHolder(p0: Holder, p1: Int) {
 
-        p0.textview.setText(usersList.get(p1).name)
+        p0.bind(currency[p1])
 
-SetColor(p0)
+        SetColor(p0)
 
     }
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
-        val textview: TextView = itemView.findViewById(R.id.itemtext) as TextView
-    }
 
-    private fun SetColor(p0: Holder){
+    class Holder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Currency.Datum) {
+            with(binding) {
+                CurencyName.text = item.name
+                Symbol.text = item.symbol
+                // websiteSlug.text =item.websiteSlug
+                websitename.text = item.websiteSlug
 
+            }
 
-        if(col==0){
-             greencolor=100
-             col =  Color.rgb(45,greencolor,255)
         }
-        else
-        {
-            if(greencolor>230)
-                greencolor=100
+        //val textview: TextView = itemView.findViewById(R.id.itemtext) as TextView
 
-            greencolor+=15
-            col =  Color.rgb(45,greencolor,255)
+    }
+
+    private fun SetColor(p0: Holder) {
+
+
+        if (col == 0) {
+            greencolor = 100
+            col = Color.rgb(45, greencolor, 255)
+        } else {
+            if (greencolor > 230)
+                greencolor = 100
+
+            greencolor += 15
+            col = Color.rgb(45, greencolor, 255)
         }
 
 
 
-        p0.textview.setBackgroundColor(col)
+        p0.itemView.setBackgroundColor(col)
     }
 
-     public fun RemoveItem(position:Int){
-         usersList.removeAt(position)
-         notifyDataSetChanged()
-     }
+    public fun RemoveItem(position: Int) {
+        //  currency.removeAt(position)
+        notifyDataSetChanged()
+    }
 
-    public fun RemoveView(viewholder:RecyclerView.ViewHolder)
-    {
+    public fun RemoveView(viewholder: RecyclerView.ViewHolder) {
         (viewholder.itemView.parent as ViewGroup).removeView(viewholder.itemView)
         notifyDataSetChanged()
     }
+
+    fun GetCurrencyList(): List<Currency.Datum> {
+        return this.currency
+    }
+
+    fun SetCurrency(currencyt: List<Currency.Datum>) {
+        this.currency = currencyt
+
+    }
+
 
 }

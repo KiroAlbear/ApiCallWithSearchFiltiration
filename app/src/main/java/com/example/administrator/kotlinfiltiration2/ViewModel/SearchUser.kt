@@ -2,40 +2,38 @@ package com.example.administrator.kotlinfiltiration2.ViewModel
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import android.graphics.Color
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.example.administrator.kotlinfiltiration2.Model.User
+import com.example.administrator.kotlinfiltiration2.Model.Currency
 
-class SearchUsers(context: Context, recycleview: RecyclerView, adaper: UsersAdapter, userslist: ArrayList<User>) : ViewModel() {
-    private var arraylis: ArrayList<User> =userslist
+class SearchUsers(context: Context, recycleview: RecyclerView, adaper: UsersAdapter ) : ViewModel() {
+
+    private var arraylis: List<Currency.Datum> =adaper.GetCurrencyList()
     private var adapter: UsersAdapter = adaper
     private var recycleview:RecyclerView = recycleview
 
     public fun Search(word: String) {
-        var chosen: ArrayList<User> = arrayListOf()
+        var chosen: ArrayList<Currency.Datum> = arrayListOf()
 
         var word2 = word.toLowerCase()
 
-        for (user: User in arraylis) {
-            var temp = user.name.toLowerCase()
-            if (temp.contains(word2))
-                chosen.add(user)
+        for (currency: Currency.Datum in arraylis) {
+            var temp = currency.name!!.toLowerCase()
+            if (temp!!.contains(word2))
+                chosen.add(currency)
         }
 
         UpdateList(chosen)
 
     }
 
-    public fun UpdateList(chosenlist: ArrayList<User>) {
+    public fun UpdateList(currencylist: ArrayList<Currency.Datum>) {
 
-        if(chosenlist.size==0)
+        if(currencylist.size==0)
             recycleview.setVisibility(View.GONE)
         else{
             recycleview.setVisibility(View.VISIBLE)
-            adapter.usersList = chosenlist
+            adapter.SetCurrency(currencylist)
             adapter.notifyDataSetChanged()
         }
 

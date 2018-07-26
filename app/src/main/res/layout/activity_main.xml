@@ -13,18 +13,14 @@
         android:text="Cannot Find Value"
         android:textAlignment="center"
 
-        android:gravity="center"
-
-        />
+        android:gravity="center" />
 
 
     <EditText
         android:id="@+id/myeditText"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_height="80dp"
-
-        />
+        android:layout_height="80dp" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -32,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/myeditText"
-        android:background="#fff" />
+
+        android:background="#6e6e6e" />
 
 
 </RelativeLayout>
