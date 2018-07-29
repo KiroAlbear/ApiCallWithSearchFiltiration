@@ -17,11 +17,11 @@ class Retrofit_GetData(context: Context, getdatalist: getDataList) {
     var context = context
     //    var currencyadapter = currencyadapter
 //    var searchcurrency = searchCurrency
-    var currencyresponse: List<Currency.Datum>? = null
+    var currencyresponse: List<Currency.Companion.Datum>? = null
     var getdatalist: getDataList? = getdatalist
 
     init {
-        currencyresponse = arrayListOf<Currency.Datum>()
+        currencyresponse = arrayListOf<Currency.Companion.Datum>()
     }
 
     fun getData() {

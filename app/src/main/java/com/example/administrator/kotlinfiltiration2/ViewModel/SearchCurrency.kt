@@ -8,16 +8,16 @@ import com.example.administrator.kotlinfiltiration2.Model.Currency
 
 class SearchCurrency(context: Context, recycleview: RecyclerView, adaper: CurrancyAdapter ) : ViewModel() {
 
-    private var arraylis: List<Currency.Datum> =adaper.GetCurrencyList()
+    private var arraylis: List<Currency.Companion.Datum> =adaper.GetCurrencyList()
     private var adapter: CurrancyAdapter = adaper
     private var recycleview:RecyclerView = recycleview
 
     public fun Search(word: String) {
-        var chosen: ArrayList<Currency.Datum> = arrayListOf()
+        var chosen: ArrayList<Currency.Companion.Datum> = arrayListOf()
 
         var word2 = word.toLowerCase()
 
-        for (currency: Currency.Datum in arraylis) {
+        for (currency: Currency.Companion.Datum in arraylis) {
             var temp = currency.name!!.toLowerCase()
             if (temp!!.contains(word2))
                 chosen.add(currency)
@@ -27,7 +27,7 @@ class SearchCurrency(context: Context, recycleview: RecyclerView, adaper: Curran
 
     }
 
-    public fun UpdateList(currencylist: ArrayList<Currency.Datum>) {
+    public fun UpdateList(currencylist: ArrayList<Currency.Companion.Datum>) {
 
         if(currencylist.size==0)
             recycleview.setVisibility(View.GONE)

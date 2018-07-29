@@ -5,5 +5,5 @@ import java.util.*
 
 interface getDataList {
 
-    fun onDataRecieved(list: List<Currency.Datum>)
+    fun onDataRecieved(list: List<Currency.Companion.Datum>)
 }

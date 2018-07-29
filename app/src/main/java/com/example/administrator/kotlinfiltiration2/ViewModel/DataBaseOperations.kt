@@ -15,15 +15,15 @@ interface DataBaseOperations {
 
 
     @Insert
-    fun addcurrency(currency: Currency.Datum)
+    fun addcurrency(currency: Currency.Companion.Datum)
 
     //check for unique data
     @Query("SELECT  COUNT(*)  FROM currencytable where name like :currencyname" )
     fun ValueExist(currencyname:String): Int
 
     ///get all data from database
-//    @Query("select * from currencytable")
-//    fun getallcurrencies(): List<Currency.Datum>
+    @Query("select * from currencytable")
+    fun getallcurrencies(): List<Currency.Companion.Datum>
 
     //get data size
     @Query("SELECT COUNT(*) FROM currencytable")

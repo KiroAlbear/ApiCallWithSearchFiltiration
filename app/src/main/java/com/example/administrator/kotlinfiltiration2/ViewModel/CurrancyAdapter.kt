@@ -13,12 +13,12 @@ import com.example.administrator.kotlinfiltiration2.R.layout.item
 
 
 
-class CurrancyAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter<CurrancyAdapter.Holder>() {
+class CurrancyAdapter(currencylist: List<Currency.Companion.Datum>) : RecyclerView.Adapter<CurrancyAdapter.Holder>() {
     //  var usersList: ArrayList<User> = userlist
     private var colorlist: ArrayList<Int> = arrayListOf()
     var col = 0
     var greencolor = 0
-    var currency: List<Currency.Datum> = currencylist
+    var currency: List<Currency.Companion.Datum> = currencylist
 
 
 
@@ -47,7 +47,7 @@ class CurrancyAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter
 
 
     class Holder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Currency.Datum) {
+        fun bind(item: Currency.Companion.Datum) {
             with(binding) {
                 CurencyName.text = item.name
                 Symbol.text = item.symbol
@@ -90,11 +90,11 @@ class CurrancyAdapter(currencylist: List<Currency.Datum>) : RecyclerView.Adapter
         notifyDataSetChanged()
     }
 
-    fun GetCurrencyList(): List<Currency.Datum> {
+    fun GetCurrencyList(): List<Currency.Companion.Datum> {
         return this.currency
     }
 
-    fun SetCurrency(currencyt: List<Currency.Datum>) {
+    fun SetCurrency(currencyt: List<Currency.Companion.Datum>) {
         this.currency = currencyt
 
     }

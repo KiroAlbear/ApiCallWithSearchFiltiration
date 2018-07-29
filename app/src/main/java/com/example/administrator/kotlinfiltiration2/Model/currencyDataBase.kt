@@ -9,11 +9,11 @@ import com.example.administrator.kotlinfiltiration2.ViewModel.DataBaseOperations
 import java.sql.Array
 import kotlin.reflect.KClass
 
-@Database(entities = arrayOf(Currency.Datum::class),version = 1)
+@Database(entities = arrayOf(Currency.Companion.Datum::class),version = 1)
 abstract class currencyDataBase : RoomDatabase()
 {
 
-   abstract fun insert():DataBaseOperations
+   abstract fun databaseoperation():DataBaseOperations
 
 
 

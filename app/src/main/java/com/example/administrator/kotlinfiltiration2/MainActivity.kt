@@ -43,16 +43,22 @@ class MainActivity : AppCompatActivity(), getDataList {
         setContentView(R.layout.activity_main)
 
 
-        var tablesize = SaveToDataBase(this,null)
+        var databaseoperation = SaveToDataBase(this,null)
 
-        if(tablesize.GetTableSize()==0)
+        if(databaseoperation.GetTableSize()>0)
         {
-            var retrofit_GetData: Retrofit_GetData = Retrofit_GetData(this, this)
-            retrofit_GetData.getData()
+           var currencydata = databaseoperation.GetAllData()
+            currencyAdapter = CurrancyAdapter(currencydata)
+
+            myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
+            myRecycleView.adapter = currencyAdapter
+            search = SearchCurrency(applicationContext, myRecycleView, currencyAdapter)
+
         }
         else
         {
-            var getalldata = SaveToDataBase(this,null)
+            var retrofit_GetData: Retrofit_GetData = Retrofit_GetData(this, this)
+            retrofit_GetData.getData()
 
         }
 
@@ -114,7 +120,7 @@ class MainActivity : AppCompatActivity(), getDataList {
     }
 
 
-    override fun onDataRecieved(list: List<Currency.Datum>) {
+    override fun onDataRecieved(list: List<Currency.Companion.Datum>) {
 
 
         currencyAdapter = CurrancyAdapter(list)
