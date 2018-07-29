@@ -23,9 +23,22 @@ class SaveToDataBase {
 
         for (i in currencylist!!) {
             roomdatabase!!.insert().addcurrency(i)
+
         }
         Toast.makeText(context, "Currencies Saved", Toast.LENGTH_SHORT).show()
     }
+
+    fun GetTableSize():Int{
+        return roomdatabase!!.insert().tablesize()
+    }
+
+    fun GetAllData():List<Currency.Datum>{
+        return roomdatabase!!.insert().getallcurrencies()
+    }
+
+
+
+
 
 
 }

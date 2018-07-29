@@ -25,7 +25,7 @@ import kotlin.math.log
 import org.json.JSONArray
 import org.json.JSONException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), getDataList {
 
 
     // private var userlist: ArrayList<User> = arrayListOf()
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var currencyAdapter: CurrancyAdapter
     private lateinit var search: SearchCurrency
     private var currencydatabase: SaveToDataBase? = null
+    private var currencylist: List<Currency>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,79 +43,58 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-       
+        var tablesize = SaveToDataBase(this,null)
 
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl("https://api.coinmarketcap.com")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        val request = retrofit.create(CurrencyApi::class.java)
+        if(tablesize.GetTableSize()==0)
+        {
+            var retrofit_GetData: Retrofit_GetData = Retrofit_GetData(this, this)
+            retrofit_GetData.getData()
+        }
+        else
+        {
+            var getalldata = SaveToDataBase(this,null)
 
-//      val a=  api.getcurrency().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                       var response:CurrencyApiResponse=it
-////                        //CurrencyAdapter.SetCurrency(it.data)
-//                    CurrencyAdapter = UsersAdapter(response.data)
-//                    Toast.makeText(applicationContext,response.data.ID().name.toString(),Toast.LENGTH_LONG).show()
+        }
+
+
+
+
+//        val retrofit: Retrofit = Retrofit.Builder().baseUrl("https://api.coinmarketcap.com")
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//        val request = retrofit.create(CurrencyApi::class.java)
 //
-//                },{
-//                  Toast.makeText(applicationContext,it.message,Toast.LENGTH_LONG).show()
-//                })
-
-
-        var call: Call<Currency> = request.getcurrency()
-
-        call.enqueue(object : Callback<Currency> {
-            override fun onFailure(call: Call<Currency>?, t: Throwable?) {
-
-                Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<Currency>?, response: Response<Currency>?) {
-
-                var currencyresponse: List<Currency.Datum> = response!!.body()!!.data!!
-
-                // var currencies = currencyresponse!!.data.
-                currencyAdapter = CurrancyAdapter(currencyresponse)
-                myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
-                myRecycleView.adapter = currencyAdapter
-
-                search = SearchCurrency(applicationContext, myRecycleView, currencyAdapter)
-
-                currencydatabase = SaveToDataBase(applicationContext, currencyresponse)
-                currencydatabase!!.savetodataase()
-
-                //  Toast.makeText(applicationContext, currencyresponse!![2].name,Toast.LENGTH_SHORT).show()
-
-
-            }
-        })
-
-
-//        call.enqueue(object : Callback<List<CurrencyApiResponse>>{
-//            override fun onFailure(call: Call<List<CurrencyApiResponse>>?, t: Throwable?) {
+//
+//        var call: Call<Currency> = request.getcurrency()
+//
+//        call.enqueue(object : Callback<Currency> {
+//            override fun onFailure(call: Call<Currency>?, t: Throwable?) {
+//
 //                Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG).show()
-//                Log.w("",t.toString())
 //            }
 //
-//            override fun onResponse(call: Call<List<CurrencyApiResponse>>?, response: Response<List<CurrencyApiResponse>>?) {
-//                Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
-//                Log.w("","Success")
+//            override fun onResponse(call: Call<Currency>?, response: Response<Currency>?) {
+//
+//                var currencyresponse: List<Currency.Datum> = response!!.body()!!.data!!
+//
+//                // var currencies = currencyresponse!!.data.
+//                currencyAdapter = CurrancyAdapter(currencyresponse)
+//                myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
+//                myRecycleView.adapter = currencyAdapter
+//
+//                search = SearchCurrency(applicationContext, myRecycleView, currencyAdapter)
+//
+//
+//
+//                //  Toast.makeText(applicationContext, currencyresponse!![2].name,Toast.LENGTH_SHORT).show()
+//
+//
 //            }
 //        })
 
 
-        //    var search  = SearchUsers(this,myRecycleView,CurrencyAdapter)
-
-
-//        val recycleview = findViewById<RecyclerView>(R.id.myRecycleView)
-
-        //search=SearchUsers(this,recyclerView,usersadapter)
-
-        // activityMainBinding.search = SearchUsers(this,myRecycleView,usersadapter,userlist)
-
-        myeditText.addTextChangedListener(object : TextWatcher {
+           myeditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
             }
@@ -129,9 +110,25 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        //var swipaction = SwipAction(myRecycleView,CurrencyAdapter)
-        //swipaction.SetSwipAction()
 
+    }
+
+
+    override fun onDataRecieved(list: List<Currency.Datum>) {
+
+
+        currencyAdapter = CurrancyAdapter(list)
+
+        myRecycleView.layoutManager = GridLayoutManager(applicationContext, 1)
+        myRecycleView.adapter = currencyAdapter
+
+        search = SearchCurrency(applicationContext, myRecycleView, currencyAdapter)
+
+
+        currencydatabase = SaveToDataBase(applicationContext, list)
+        currencydatabase!!.savetodataase()
+//        if (currencylist!!.size > 0)
+//            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
 
     }
 }

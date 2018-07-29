@@ -12,16 +12,26 @@ import java.util.*
 @Dao
 interface DataBaseOperations {
 
+
+
     @Insert
     fun addcurrency(currency: Currency.Datum)
 
-    @Query("select * from currencytable")
-    fun getallcurrencies(): List<Currency.Datum>
+    //check for unique data
+    @Query("SELECT  COUNT(*)  FROM currencytable where name like :currencyname" )
+    fun ValueExist(currencyname:String): Int
 
+    ///get all data from database
+//    @Query("select * from currencytable")
+//    fun getallcurrencies(): List<Currency.Datum>
+
+    //get data size
     @Query("SELECT COUNT(*) FROM currencytable")
-    fun tablesize():Int
+    fun tablesize(): Int
 
-    @Query("SELECT * FROM currencytable where name like :currencyname" )
-    fun searchcurrency(currencyname:String): List<Currency.Datum>
+    ///search for data
+//    @Query("SELECT * FROM currencytable where name like :currencyname")
+//    fun searchcurrency(currencyname:String): List<Currency.Datum>
+
 
 }
